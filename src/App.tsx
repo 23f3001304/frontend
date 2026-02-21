@@ -16,6 +16,7 @@ import TripDispatcher from "./pages/TripDispatcher";
 import Maintenance from "./pages/Maintenance";
 import Performance from "./pages/Performance";
 import TripExpense from "./pages/TripExpense";
+import Analytics from "./pages/Analytics";
 
 /** Context shape passed from {@link AppLayout} to child routes. */
 interface LayoutContext {
@@ -44,6 +45,7 @@ function App() {
           <Route path="/maintenance" element={<MaintenancePage />} />
           <Route path="/performance" element={<PerformancePage />} />
           <Route path="/expenses" element={<TripExpensePage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
           {/* Redirect root to dashboard */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           {/* Catch-all */}
@@ -120,6 +122,15 @@ function PerformancePage() {
 function TripExpensePage() {
   const { searchQuery, pageSize } = useOutletContext<LayoutContext>();
   return <TripExpense searchQuery={searchQuery} pageSize={pageSize} />;
+}
+
+/**
+ * Thin wrapper that reads the shared layout context from
+ * the `<Outlet />` and forwards it to {@link Analytics}.
+ */
+function AnalyticsPage() {
+  const { searchQuery, pageSize } = useOutletContext<LayoutContext>();
+  return <Analytics searchQuery={searchQuery} pageSize={pageSize} />;
 }
 
 export default App;
