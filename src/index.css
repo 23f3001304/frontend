@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* Use class-based dark mode so useTheme's .dark toggle on <html> works */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #2563EB;
+  --color-primary-hover: #1D4ED8;
+  --color-background-light: #F3F4F6;
+  --color-background-dark: #0F172A;
+  --color-surface-light: #FFFFFF;
+  --color-surface-dark: #1E293B;
+  --color-border-light: #E5E7EB;
+  --color-border-dark: #334155;
+  --color-text-light: #1F2937;
+  --color-text-dark: #F8FAFC;
+  --color-text-muted-light: #6B7280;
+  --color-text-muted-dark: #94A3B8;
+  --font-family-sans: "Inter", sans-serif;
+  --font-family-display: "Inter", sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Hide scrollbars unless content overflows and user is scrolling */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.scrollbar-thin:hover {
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 3px;
+}
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+}
