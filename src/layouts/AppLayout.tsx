@@ -3,14 +3,15 @@
  * Shared application shell rendered around every route.
  *
  * Provides:
- *  - Sidebar (desktop + mobile drawer).
+ *  - **RBACProvider** — exposes the current user role & permission helpers.
+ *  - Sidebar (desktop + mobile drawer) — nav items filtered by role.
  *  - Header with search, filters, theme toggle, and settings.
  *  - Ctrl+K command palette overlay.
- *  - Settings modal (theme, page size).
+ *  - Settings modal (theme, page size, role switcher).
  *  - A scrollable `<Outlet />` area where page content renders.
  */
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
@@ -18,8 +19,11 @@ import CommandPalette from "../components/CommandPalette";
 import SettingsModal from "../components/SettingsModal";
 import { NewTripModal } from "../components/dispatcher";
 import { NewVehicleModal } from "../components/vehicles";
+import { RBACProvider } from "../contexts/RBACContext";
 import { useTheme } from "../hooks/useTheme";
 import { navItems, currentUser, trips } from "../data";
+import { filterNavItems } from "../lib/rbac";
+import { USER_ROLE_LABELS, type UserRole } from "../types";
 
 /** Default number of trip rows shown per table page. */
 const DEFAULT_PAGE_SIZE = 5;
@@ -38,6 +42,25 @@ export default function AppLayout() {
   const [autoRefresh, setAutoRefresh] = useState(false);
   const [showNewTrip, setShowNewTrip] = useState(false);
   const [showNewVehicle, setShowNewVehicle] = useState(false);
+
+  // ─── RBAC: active role (switchable at runtime for demo) ───
+  const [activeRole, setActiveRole] = useState<UserRole>(currentUser.userRole);
+
+  /** User object with the currently-active role applied. */
+  const activeUser = useMemo(
+    () => ({
+      ...currentUser,
+      userRole: activeRole,
+      role: USER_ROLE_LABELS[activeRole],
+    }),
+    [activeRole],
+  );
+
+  /** Nav items filtered to what the active role may see. */
+  const visibleNavItems = useMemo(
+    () => filterNavItems(navItems, activeRole),
+    [activeRole],
+  );
 
   const { theme, setTheme, resolvedTheme } = useTheme();
 
@@ -70,6 +93,7 @@ export default function AppLayout() {
   }, []);
 
   return (
+    <RBACProvider user={activeUser} onRoleChange={setActiveRole}>
     <div className="bg-background-light dark:bg-background-dark font-sans text-text-light dark:text-text-dark h-screen flex overflow-hidden">
       {/* Mobile overlay */}
       {sidebarOpen && (
@@ -81,8 +105,8 @@ export default function AppLayout() {
 
       {/* Sidebar */}
       <Sidebar
-        navItems={navItems}
-        user={currentUser}
+        navItems={visibleNavItems}
+        user={activeUser}
         mobileOpen={sidebarOpen}
         onClose={closeSidebar}
       />
@@ -150,5 +174,6 @@ export default function AppLayout() {
         onAutoRefreshChange={setAutoRefresh}
       />
     </div>
+    </RBACProvider>
   );
 }

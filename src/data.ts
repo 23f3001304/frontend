@@ -22,22 +22,22 @@ import type {
 
 /** Primary sidebar navigation items. The `active` flag marks the default page. */
 export const navItems: NavItem[] = [
-  { icon: "dashboard", label: "Dashboard", href: "/dashboard", active: true },
-  { icon: "directions_car", label: "Vehicle Registry", href: "/vehicles" },
-  { icon: "map", label: "All Trips", href: "/trips" },
-  { icon: "alt_route", label: "Trip Dispatcher", href: "/dispatcher" },
-  { icon: "build", label: "Maintenance", href: "/maintenance" },
-  { icon: "receipt_long", label: "Trip & Expense", href: "/expenses" },
-  { icon: "verified_user", label: "Performance", href: "/performance" },
-  { icon: "analytics", label: "Analytics", href: "/analytics" },
+  { icon: "dashboard", label: "Dashboard", href: "/dashboard", active: true, requiredPermission: "dashboard:view" },
+  { icon: "directions_car", label: "Vehicle Registry", href: "/vehicles", requiredPermission: "vehicles:view" },
+  { icon: "map", label: "All Trips", href: "/trips", requiredPermission: "trips:view" },
+  { icon: "alt_route", label: "Trip Dispatcher", href: "/dispatcher", requiredPermission: "dispatcher:view" },
+  { icon: "build", label: "Maintenance", href: "/maintenance", requiredPermission: "maintenance:view" },
+  { icon: "receipt_long", label: "Trip & Expense", href: "/expenses", requiredPermission: "expenses:view" },
+  { icon: "verified_user", label: "Performance", href: "/performance", requiredPermission: "drivers:view" },
+  { icon: "analytics", label: "Analytics", href: "/analytics", requiredPermission: "analytics:view" },
 ];
 
 /** Signed-in user displayed in the sidebar profile area. */
 export const currentUser: UserProfile = {
   name: "Alex Morgan",
   role: "Fleet Manager",
-  avatarUrl:
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuCk35KUeasH1IS5wWE63QoD1FWPHnvbLp3RafhgDBLBJ9GdLsFgOsWJvJNBY6bJTU9aLOKGS3iV9GTH0Ikx1vU8Fwu5B18gzJ47Ffr_NXvSQ-E7Gj6FR9ddD5roE_2iRzRmr7eBwGJm5eHHFU5GP6sV5JMlvx8-yDCQ5yinqTV_Vjo21F8B2ttwygU-DKkByB-2NA66z6EntxnE1nUkala8NmqNspAzZI73dX0fhjDy0l4151zYk15pX_Nq08z-3xNxCZjPZTOmaw",
+  userRole: "fleet_manager",
+  avatarUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCk35KUeasH1IS5wWE63QoD1FWPHnvbLp3RafhgDBLBJ9GdLsFgOsWJvJNBY6bJTU9aLOKGS3iV9GTH0Ikx1vU8Fwu5B18gzJ47Ffr_NXvSQ-E7Gj6FR9ddD5roE_2iRzRmr7eBwGJm5eHHFU5GP6sV5JMlvx8-yDCQ5yinqTV_Vjo21F8B2ttwygU-DKkByB-2NA66z6EntxnE1nUkala8NmqNspAzZI73dX0fhjDy0l4151zYk15pX_Nq08z-3xNxCZjPZTOmaw",
 };
 
 /** KPI statistics rendered as cards above the fleet table. */

@@ -4,6 +4,79 @@
  * Every data structure consumed by components is defined here.
  */
 
+/* ─────────────────────────────────────────────
+ *  RBAC  –  Role-Based Access Control
+ * ───────────────────────────────────────────── */
+
+/**
+ * Application roles.
+ * Each role maps to a distinct set of {@link Permission}s in `rbac.ts`.
+ */
+export type UserRole =
+  | "fleet_manager"
+  | "dispatcher"
+  | "safety_officer"
+  | "financial_analyst";
+
+/** Human-readable labels for roles (used in UI selectors / badges). */
+export const USER_ROLE_LABELS: Record<UserRole, string> = {
+  fleet_manager: "Fleet Manager",
+  dispatcher: "Dispatcher",
+  safety_officer: "Safety Officer",
+  financial_analyst: "Financial Analyst",
+};
+
+/**
+ * Fine-grained permissions guarding individual features.
+ *
+ * Naming convention: `<domain>:<action>`
+ *  - `view`   – read-only access to a page / section.
+ *  - `create` – create new records.
+ *  - `edit`   – modify existing records.
+ *  - `delete` – remove records.
+ *  - `export` – download / email reports.
+ */
+export type Permission =
+  /* Dashboard */
+  | "dashboard:view"
+  /* Vehicle Registry */
+  | "vehicles:view"
+  | "vehicles:create"
+  | "vehicles:edit"
+  | "vehicles:delete"
+  | "vehicles:service_toggle"
+  /* Trips */
+  | "trips:view"
+  | "trips:create"
+  | "trips:edit"
+  | "trips:delete"
+  /* Trip Dispatcher */
+  | "dispatcher:view"
+  | "dispatcher:create"
+  | "dispatcher:assign"
+  /* Maintenance */
+  | "maintenance:view"
+  | "maintenance:create"
+  | "maintenance:edit"
+  | "maintenance:delete"
+  /* Driver Performance */
+  | "drivers:view"
+  | "drivers:create"
+  | "drivers:edit"
+  | "drivers:toggle_duty"
+  | "drivers:remove"
+  /* Trip & Expense */
+  | "expenses:view"
+  | "expenses:create"
+  | "expenses:edit"
+  | "expenses:approve"
+  /* Analytics */
+  | "analytics:view"
+  | "analytics:export"
+  /* Settings */
+  | "settings:view"
+  | "settings:edit";
+
 /** Sidebar navigation link definition. */
 export interface NavItem {
   /** Material Symbols icon name. */
@@ -14,14 +87,21 @@ export interface NavItem {
   href: string;
   /** Whether this item is the initially-active page. */
   active?: boolean;
+  /**
+   * Permission required to see this nav item.
+   * If omitted the item is visible to all roles.
+   */
+  requiredPermission?: Permission;
 }
 
 /** Authenticated user shown in the sidebar profile section. */
 export interface UserProfile {
   /** Full display name (e.g. "Alex Morgan"). */
   name: string;
-  /** Job title or role description. */
+  /** Job title or role description (display text). */
   role: string;
+  /** RBAC role key used for permission checks. */
+  userRole: UserRole;
   /** URL for the user's avatar image. */
   avatarUrl: string;
 }

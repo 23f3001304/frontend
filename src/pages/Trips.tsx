@@ -21,6 +21,7 @@ import { trips as allTrips } from "../data";
 import { tripService } from "../services";
 import { downloadBlob } from "../lib/download";
 import Pagination from "../components/Pagination";
+import { Can } from "../components/PermissionGate";
 
 /* ───────── Status badge styles ───────── */
 
@@ -150,14 +151,16 @@ export default function Trips({ pageSize, searchQuery, onNewTrip }: TripsProps) 
             {allTrips.length} trips across your fleet — search, filter, and manage.
           </p>
         </div>
-        <button
-          onClick={handleNewTrip}
-          {...pop}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-sm text-sm font-medium hover:bg-primary-hover transition-colors self-start sm:self-center"
-        >
-          <span className="material-symbols-outlined text-lg">add_circle</span>
-          New Trip
-        </button>
+        <Can permission="trips:create">
+          <button
+            onClick={handleNewTrip}
+            {...pop}
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-sm text-sm font-medium hover:bg-primary-hover transition-colors self-start sm:self-center"
+          >
+            <span className="material-symbols-outlined text-lg">add_circle</span>
+            New Trip
+          </button>
+        </Can>
       </div>
 
       {/* Tabs + Toolbar */}
@@ -198,14 +201,16 @@ export default function Trips({ pageSize, searchQuery, onNewTrip }: TripsProps) 
           </div>
 
           {/* Export CSV */}
-          <button
-            onClick={handleExportCSV}
-            {...pop}
-            className="inline-flex items-center gap-2 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-          >
-            <span className="material-symbols-outlined text-lg">download</span>
-            Export CSV
-          </button>
+          <Can permission="analytics:export">
+            <button
+              onClick={handleExportCSV}
+              {...pop}
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
+              <span className="material-symbols-outlined text-lg">download</span>
+              Export CSV
+            </button>
+          </Can>
         </div>
       </div>
 
@@ -515,30 +520,36 @@ function TripActionMenu({
         <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">visibility</span>
         View Details
       </button>
-      <button
-        className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        onClick={() => { handleEditTrip(tripId); onClose(); }}
-      >
-        <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">edit</span>
-        Edit Trip
-      </button>
-      {!hasDriver && (
+      <Can permission="trips:edit">
         <button
           className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          onClick={() => { handleAssignDriver(tripId); onClose(); }}
+          onClick={() => { handleEditTrip(tripId); onClose(); }}
         >
-          <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">person_add</span>
-          Assign Driver
+          <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">edit</span>
+          Edit Trip
         </button>
+      </Can>
+      {!hasDriver && (
+        <Can permission="dispatcher:assign">
+          <button
+            className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            onClick={() => { handleAssignDriver(tripId); onClose(); }}
+          >
+            <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">person_add</span>
+            Assign Driver
+          </button>
+        </Can>
       )}
       <div className="border-t border-border-light dark:border-border-dark my-1" />
-      <button
-        className="w-full text-left flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-        onClick={() => { handleCancelTrip(tripId); onClose(); }}
-      >
-        <span className="material-symbols-outlined text-lg mr-2">cancel</span>
-        Cancel Trip
-      </button>
+      <Can permission="trips:delete">
+        <button
+          className="w-full text-left flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+          onClick={() => { handleCancelTrip(tripId); onClose(); }}
+        >
+          <span className="material-symbols-outlined text-lg mr-2">cancel</span>
+          Cancel Trip
+        </button>
+      </Can>
     </div>
   );
 }

@@ -9,6 +9,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import VehicleRegistry from "./pages/VehicleRegistry";
 import Trips from "./pages/Trips";
@@ -38,14 +39,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/vehicles" element={<VehicleRegistryPage />} />
-          <Route path="/trips" element={<TripsPage />} />
-          <Route path="/dispatcher" element={<TripDispatcherPage />} />
-          <Route path="/maintenance" element={<MaintenancePage />} />
-          <Route path="/performance" element={<PerformancePage />} />
-          <Route path="/expenses" element={<TripExpensePage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/dashboard" element={<ProtectedRoute permission="dashboard:view"><DashboardPage /></ProtectedRoute>} />
+          <Route path="/vehicles" element={<ProtectedRoute permission="vehicles:view"><VehicleRegistryPage /></ProtectedRoute>} />
+          <Route path="/trips" element={<ProtectedRoute permission="trips:view"><TripsPage /></ProtectedRoute>} />
+          <Route path="/dispatcher" element={<ProtectedRoute permission="dispatcher:view"><TripDispatcherPage /></ProtectedRoute>} />
+          <Route path="/maintenance" element={<ProtectedRoute permission="maintenance:view"><MaintenancePage /></ProtectedRoute>} />
+          <Route path="/performance" element={<ProtectedRoute permission="drivers:view"><PerformancePage /></ProtectedRoute>} />
+          <Route path="/expenses" element={<ProtectedRoute permission="expenses:view"><TripExpensePage /></ProtectedRoute>} />
+          <Route path="/analytics" element={<ProtectedRoute permission="analytics:view"><AnalyticsPage /></ProtectedRoute>} />
           {/* Redirect root to dashboard */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           {/* Catch-all */}

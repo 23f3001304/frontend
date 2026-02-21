@@ -6,6 +6,7 @@
 
 import { maintenanceService } from "../../services";
 import { openBlob } from "../../lib/download";
+import { Can } from "../PermissionGate";
 
 interface ServiceLogActionMenuProps {
   /** Service log ID for the action. */
@@ -61,32 +62,38 @@ export default function ServiceLogActionMenu({
         </span>
         View Details
       </button>
-      <button
-        className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        onClick={handleEditLog}
-      >
-        <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">
-          edit
-        </span>
-        Edit Log
-      </button>
-      <button
-        className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        onClick={handlePrintReport}
-      >
-        <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">
-          print
-        </span>
-        Print Report
-      </button>
+      <Can permission="maintenance:edit">
+        <button
+          className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          onClick={handleEditLog}
+        >
+          <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">
+            edit
+          </span>
+          Edit Log
+        </button>
+      </Can>
+      <Can permission="analytics:export">
+        <button
+          className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          onClick={handlePrintReport}
+        >
+          <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">
+            print
+          </span>
+          Print Report
+        </button>
+      </Can>
       <div className="border-t border-border-light dark:border-border-dark my-1" />
-      <button
-        className="w-full text-left flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-        onClick={handleDeleteLog}
-      >
-        <span className="material-symbols-outlined text-lg mr-2">delete</span>
-        Delete Log
-      </button>
+      <Can permission="maintenance:delete">
+        <button
+          className="w-full text-left flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+          onClick={handleDeleteLog}
+        >
+          <span className="material-symbols-outlined text-lg mr-2">delete</span>
+          Delete Log
+        </button>
+      </Can>
     </div>
   );
 }

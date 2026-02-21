@@ -5,6 +5,7 @@
  */
 
 import { fleetService } from "../../services";
+import { Can } from "../PermissionGate";
 
 interface VehicleActionMenuProps {
   /** Vehicle ID for the action. */
@@ -60,32 +61,38 @@ export default function VehicleActionMenu({
         </span>
         View Details
       </button>
-      <button
-        className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        onClick={handleEditVehicle}
-      >
-        <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">
-          edit
-        </span>
-        Edit Vehicle
-      </button>
-      <button
-        className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        onClick={handleScheduleService}
-      >
-        <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">
-          build
-        </span>
-        Schedule Service
-      </button>
+      <Can permission="vehicles:edit">
+        <button
+          className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          onClick={handleEditVehicle}
+        >
+          <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">
+            edit
+          </span>
+          Edit Vehicle
+        </button>
+      </Can>
+      <Can permission="maintenance:create">
+        <button
+          className="w-full text-left flex items-center px-4 py-2 text-sm text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          onClick={handleScheduleService}
+        >
+          <span className="material-symbols-outlined text-lg mr-2 text-text-muted-light dark:text-text-muted-dark">
+            build
+          </span>
+          Schedule Service
+        </button>
+      </Can>
       <div className="border-t border-border-light dark:border-border-dark my-1" />
-      <button
-        className="w-full text-left flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-        onClick={handleRetireVehicle}
-      >
-        <span className="material-symbols-outlined text-lg mr-2">delete</span>
-        Retire Vehicle
-      </button>
+      <Can permission="vehicles:delete">
+        <button
+          className="w-full text-left flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+          onClick={handleRetireVehicle}
+        >
+          <span className="material-symbols-outlined text-lg mr-2">delete</span>
+          Retire Vehicle
+        </button>
+      </Can>
     </div>
   );
 }

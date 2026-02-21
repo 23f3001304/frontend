@@ -29,6 +29,7 @@ import type {
 import { formatCurrency } from "../components/expenses/constants";
 import { expenseService } from "../services";
 import { downloadBlob } from "../lib/download";
+import { Can } from "../components/PermissionGate";
 
 /* ─── Props ─── */
 
@@ -181,22 +182,26 @@ export default function TripExpense({ searchQuery, pageSize }: TripExpenseProps)
           </p>
         </div>
         <div className="flex items-center gap-3 self-start sm:self-center">
-          <button
-            onClick={handleExport}
-            {...pop}
-            className="inline-flex items-center gap-2 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-          >
-            <span className="material-symbols-outlined text-lg">download</span>
-            Export
-          </button>
-          <button
-            onClick={() => setShowAddExpense(true)}
-            {...pop}
-            className="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-lg shadow-sm text-sm font-medium hover:bg-primary-hover transition-colors"
-          >
-            <span className="material-symbols-outlined text-lg">add</span>
-            Add an Expense
-          </button>
+          <Can permission="analytics:export">
+            <button
+              onClick={handleExport}
+              {...pop}
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
+              <span className="material-symbols-outlined text-lg">download</span>
+              Export
+            </button>
+          </Can>
+          <Can permission="expenses:create">
+            <button
+              onClick={() => setShowAddExpense(true)}
+              {...pop}
+              className="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-lg shadow-sm text-sm font-medium hover:bg-primary-hover transition-colors"
+            >
+              <span className="material-symbols-outlined text-lg">add</span>
+              Add an Expense
+            </button>
+          </Can>
         </div>
       </div>
 

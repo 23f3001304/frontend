@@ -12,6 +12,7 @@ import { availableDrivers } from "./constants";
 import LocationInput, { type LocationValue } from "./LocationInput";
 import type { RouteResult } from "../../lib/locationService";
 import type { ValidationErrors } from "../../lib/validators";
+import { Can } from "../PermissionGate";
 
 /* ─── Props ─── */
 
@@ -281,22 +282,26 @@ export default function NewTripForm({
 
         {/* Action buttons */}
         <div className="flex items-center gap-3 pt-2">
-          <button
-            onClick={onSaveDraft}
-            {...pop}
-            className="flex-1 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-          >
-            Save Draft
-          </button>
-          <button
-            onClick={onDispatch}
-            disabled={!!routeError || routeLoading}
-            {...pop}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-hover transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Dispatch Trip
-            <span className="material-symbols-outlined text-lg">send</span>
-          </button>
+          <Can permission="trips:create">
+            <button
+              onClick={onSaveDraft}
+              {...pop}
+              className="flex-1 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
+              Save Draft
+            </button>
+          </Can>
+          <Can permission="dispatcher:assign">
+            <button
+              onClick={onDispatch}
+              disabled={!!routeError || routeLoading}
+              {...pop}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-hover transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Dispatch Trip
+              <span className="material-symbols-outlined text-lg">send</span>
+            </button>
+          </Can>
         </div>
       </div>
     </div>

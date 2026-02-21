@@ -17,6 +17,7 @@ import gsap from "gsap";
 import { useDropdown } from "../hooks/useDropdown";
 import { useClickPop } from "../hooks/useGsap";
 import { fadeSlideIn, dropdownEnter } from "../lib/animations";
+import { Can } from "./PermissionGate";
 
 /** Props accepted by the {@link Header} component. */
 interface HeaderProps {
@@ -154,6 +155,7 @@ export default function Header({
           <span className="material-symbols-outlined text-xl">settings</span>
         </button>
 
+        <Can permission="trips:create">
         <button
           className="flex items-center px-3 sm:px-4 py-2 border border-primary text-primary bg-surface-light dark:bg-transparent dark:text-primary rounded-md shadow-sm text-sm font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
           onClick={onNewTrip}
@@ -163,6 +165,8 @@ export default function Header({
           <span className="hidden sm:inline">New Trip</span>
           <span className="sm:hidden">Trip</span>
         </button>
+        </Can>
+        <Can permission="vehicles:create">
         <button
           className="flex items-center px-3 sm:px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
           onClick={onNewVehicle}
@@ -174,6 +178,7 @@ export default function Header({
           <span className="hidden sm:inline">New Vehicle</span>
           <span className="sm:hidden">Vehicle</span>
         </button>
+        </Can>
       </div>
     </header>
   );

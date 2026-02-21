@@ -5,6 +5,7 @@
 
 import type { TripExpense } from "../../types";
 import { expenseStatusStyles, formatCurrency, formatDistance } from "./constants";
+import { Can } from "../PermissionGate";
 
 interface ExpenseRowProps {
   /** The expense data to render. */
@@ -67,12 +68,14 @@ export default function ExpenseRow({ expense: e, onEdit }: ExpenseRowProps) {
       </td>
       {/* Edit */}
       <td className="px-4 py-4">
-        <button
-          onClick={onEdit}
-          className="text-sm font-medium text-primary hover:text-primary-hover transition-colors"
-        >
-          Edit
-        </button>
+        <Can permission="expenses:edit">
+          <button
+            onClick={onEdit}
+            className="text-sm font-medium text-primary hover:text-primary-hover transition-colors"
+          >
+            Edit
+          </button>
+        </Can>
       </td>
     </tr>
   );

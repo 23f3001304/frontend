@@ -16,6 +16,7 @@ import { useHoverLift, useClickPop } from "../hooks/useGsap";
 import { staggerFadeIn, animateProgress } from "../lib/animations";
 import { reportService } from "../services";
 import { downloadBlob } from "../lib/download";
+import { Can } from "./PermissionGate";
 
 /** Placeholder handler — logs alert text to the console. */
 const handleAlertClick = (message: string) => console.log("Alert clicked:", message);
@@ -159,13 +160,15 @@ function DownloadReportCard() {
         <p className="text-sm text-text-light dark:text-text-dark font-medium">
           Download Daily Report
         </p>
-        <button
-          className="mt-3 text-xs text-primary font-medium hover:underline"
-          onClick={handleExportPDF}
-          {...pop}
-        >
-          Export as PDF
-        </button>
+        <Can permission="analytics:export">
+          <button
+            className="mt-3 text-xs text-primary font-medium hover:underline"
+            onClick={handleExportPDF}
+            {...pop}
+          >
+            Export as PDF
+          </button>
+        </Can>
       </div>
     </div>
   );

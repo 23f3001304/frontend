@@ -23,6 +23,7 @@ import { downloadBlob } from "../lib/download";
 import { vehicles } from "../data";
 import { VehicleTable, VehicleTypeDropdown, NewVehicleModal } from "../components/vehicles";
 import type { TabFilter } from "../components/vehicles";
+import { Can } from "../components/PermissionGate";
 
 /** Props accepted by the {@link VehicleRegistry} page. */
 interface VehicleRegistryProps {
@@ -139,14 +140,16 @@ export default function VehicleRegistry({ pageSize }: VehicleRegistryProps) {
             Manage {vehicles.length} active assets across your logistics network.
           </p>
         </div>
-        <button
-          onClick={handleAddVehicle}
-          {...pop}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-sm text-sm font-medium hover:bg-primary-hover transition-colors self-start sm:self-center"
-        >
-          <span className="material-symbols-outlined text-lg">add_circle</span>
-          Add New Vehicle
-        </button>
+        <Can permission="vehicles:create">
+          <button
+            onClick={handleAddVehicle}
+            {...pop}
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-sm text-sm font-medium hover:bg-primary-hover transition-colors self-start sm:self-center"
+          >
+            <span className="material-symbols-outlined text-lg">add_circle</span>
+            Add New Vehicle
+          </button>
+        </Can>
       </div>
 
       {/* Tabs + Toolbar */}
@@ -190,14 +193,16 @@ export default function VehicleRegistry({ pageSize }: VehicleRegistryProps) {
           <VehicleTypeDropdown value={categoryFilter} onChange={setCategoryFilter} />
 
           {/* Export CSV */}
-          <button
-            onClick={handleExportCSV}
-            {...pop}
-            className="inline-flex items-center gap-2 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-          >
-            <span className="material-symbols-outlined text-lg">download</span>
-            Export CSV
-          </button>
+          <Can permission="analytics:export">
+            <button
+              onClick={handleExportCSV}
+              {...pop}
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
+              <span className="material-symbols-outlined text-lg">download</span>
+              Export CSV
+            </button>
+          </Can>
         </div>
       </div>
 

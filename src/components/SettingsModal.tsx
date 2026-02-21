@@ -14,6 +14,7 @@ import gsap from "gsap";
 import type { Theme } from "../hooks/useTheme";
 import { useClickPop } from "../hooks/useGsap";
 import { modalEnter } from "../lib/animations";
+import RoleSwitcher from "./RoleSwitcher";
 
 /** Props accepted by the {@link SettingsModal} component. */
 interface SettingsModalProps {
@@ -168,6 +169,11 @@ export default function SettingsModal({
                 </option>
               ))}
             </select>
+          </div>
+
+          {/* Role Switcher (Demo) */}
+          <div className="pt-2 border-t border-border-light dark:border-border-dark">
+            <RoleSwitcher />
           </div>
         </div>
 

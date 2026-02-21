@@ -24,6 +24,7 @@ import { DriverTable, NewDriverModal } from "../components/drivers";
 import type { DriverTabFilter, DriverFilterByOption } from "../components/drivers";
 import { driverService } from "../services";
 import { downloadBlob } from "../lib/download";
+import { Can } from "../components/PermissionGate";
 
 /* ─── Props ─── */
 
@@ -211,14 +212,16 @@ export default function Performance({ searchQuery, pageSize }: PerformanceProps)
             Monitor {TOTAL_DRIVERS} drivers across your fleet operations.
           </p>
         </div>
-        <button
-          onClick={() => setShowAddDriver(true)}
-          {...pop}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-sm text-sm font-medium hover:bg-primary-hover transition-colors self-start sm:self-center"
-        >
-          <span className="material-symbols-outlined text-lg">person_add</span>
-          Add Driver
-        </button>
+        <Can permission="drivers:create">
+          <button
+            onClick={() => setShowAddDriver(true)}
+            {...pop}
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-sm text-sm font-medium hover:bg-primary-hover transition-colors self-start sm:self-center"
+          >
+            <span className="material-symbols-outlined text-lg">person_add</span>
+            Add Driver
+          </button>
+        </Can>
       </div>
 
       {/* Stats Cards */}
@@ -320,14 +323,16 @@ export default function Performance({ searchQuery, pageSize }: PerformanceProps)
           </div>
 
           {/* Export */}
-          <button
-            onClick={handleExport}
-            {...pop}
-            className="inline-flex items-center gap-2 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-          >
-            <span className="material-symbols-outlined text-lg">download</span>
-            Export
-          </button>
+          <Can permission="analytics:export">
+            <button
+              onClick={handleExport}
+              {...pop}
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
+              <span className="material-symbols-outlined text-lg">download</span>
+              Export
+            </button>
+          </Can>
         </div>
       </div>
 

@@ -12,6 +12,7 @@ import { staggerFadeIn } from "../../lib/animations";
 import { useHoverLift, useClickPop } from "../../hooks/useGsap";
 import { analyticsService } from "../../services";
 import { downloadBlob } from "../../lib/download";
+import { Can } from "../PermissionGate";
 
 export default function ExportReports() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,9 +38,9 @@ export default function ExportReports() {
     downloadBlob(blob, "analytics-report.pdf");
   }, []);
 
-  const handleEmail = useCallback(async () => {
-    await analyticsService.emailReport();
-  }, []);
+//   const handleEmail = useCallback(async () => {
+//     await analyticsService.emailReport();
+//   }, []);
 
   return (
     <div className="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-6">
@@ -51,25 +52,29 @@ export default function ExportReports() {
       </p>
 
       <div ref={containerRef} className="space-y-3">
-        <ExportCard
-          icon="description"
-          iconBg="bg-green-100 dark:bg-green-900/30"
-          iconColor="text-green-600 dark:text-green-400"
-          title="CSV Format"
-          subtitle="Detailed raw log"
-          actionIcon="download"
-          onClick={handleCSV}
-        />
-        <ExportCard
-          icon="picture_as_pdf"
-          iconBg="bg-red-100 dark:bg-red-900/30"
-          iconColor="text-red-600 dark:text-red-400"
-          title="PDF Report"
-          subtitle="Executive Summary"
-          actionIcon="download"
-          onClick={handlePDF}
-        />
-        <ExportCard
+        <Can permission="analytics:export">
+          <ExportCard
+            icon="description"
+            iconBg="bg-green-100 dark:bg-green-900/30"
+            iconColor="text-green-600 dark:text-green-400"
+            title="CSV Format"
+            subtitle="Detailed raw log"
+            actionIcon="download"
+            onClick={handleCSV}
+          />
+        </Can>
+        <Can permission="analytics:export">
+          <ExportCard
+            icon="picture_as_pdf"
+            iconBg="bg-red-100 dark:bg-red-900/30"
+            iconColor="text-red-600 dark:text-red-400"
+            title="PDF Report"
+            subtitle="Executive Summary"
+            actionIcon="download"
+            onClick={handlePDF}
+          />
+        </Can>
+        {/* <ExportCard
           icon="mail"
           iconBg="bg-blue-100 dark:bg-blue-900/30"
           iconColor="text-blue-600 dark:text-blue-400"
@@ -77,7 +82,7 @@ export default function ExportReports() {
           subtitle="Send to Stakeholders"
           actionIcon="send"
           onClick={handleEmail}
-        />
+        /> */}
       </div>
     </div>
   );

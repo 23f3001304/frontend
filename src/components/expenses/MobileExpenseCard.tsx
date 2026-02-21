@@ -5,6 +5,7 @@
 
 import type { TripExpense } from "../../types";
 import { expenseStatusStyles, formatCurrency, formatDistance } from "./constants";
+import { Can } from "../PermissionGate";
 
 interface MobileExpenseCardProps {
   /** The expense data to render. */
@@ -39,12 +40,14 @@ export default function MobileExpenseCard({ expense: e, onEdit }: MobileExpenseC
           >
             {e.status}
           </span>
-          <button
-            onClick={onEdit}
-            className="text-sm font-medium text-primary hover:text-primary-hover transition-colors"
-          >
-            Edit
-          </button>
+          <Can permission="expenses:edit">
+            <button
+              onClick={onEdit}
+              className="text-sm font-medium text-primary hover:text-primary-hover transition-colors"
+            >
+              Edit
+            </button>
+          </Can>
         </div>
       </div>
 

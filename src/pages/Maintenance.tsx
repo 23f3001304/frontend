@@ -26,6 +26,7 @@ import {
 import NewServiceModal from "../components/maintenance/NewServiceModal";
 import { maintenanceService } from "../services";
 import { downloadBlob } from "../lib/download";
+import { Can } from "../components/PermissionGate";
 
 /* ─── Props ─── */
 
@@ -167,14 +168,16 @@ export default function Maintenance({ searchQuery, pageSize }: MaintenanceProps)
             Track and manage {serviceLogs.length} service records across your fleet.
           </p>
         </div>
-        <button
-          onClick={() => setShowNewService(true)}
-          {...pop}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-sm text-sm font-medium hover:bg-primary-hover transition-colors self-start sm:self-center"
-        >
-          <span className="material-symbols-outlined text-lg">add_circle</span>
-          Create New Service
-        </button>
+        <Can permission="maintenance:create">
+          <button
+            onClick={() => setShowNewService(true)}
+            {...pop}
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-sm text-sm font-medium hover:bg-primary-hover transition-colors self-start sm:self-center"
+          >
+            <span className="material-symbols-outlined text-lg">add_circle</span>
+            Create New Service
+          </button>
+        </Can>
       </div>
 
       {/* Tabs + Toolbar */}
@@ -272,14 +275,16 @@ export default function Maintenance({ searchQuery, pageSize }: MaintenanceProps)
           </div>
 
           {/* Export */}
-          <button
-            onClick={handleExport}
-            {...pop}
-            className="inline-flex items-center gap-2 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-          >
-            <span className="material-symbols-outlined text-lg">download</span>
-            Export
-          </button>
+          <Can permission="analytics:export">
+            <button
+              onClick={handleExport}
+              {...pop}
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-light dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
+              <span className="material-symbols-outlined text-lg">download</span>
+              Export
+            </button>
+          </Can>
         </div>
       </div>
 
