@@ -5,7 +5,7 @@
  */
 
 import { maintenanceService } from "../../services";
-import { downloadBlob, openBlob } from "../../lib/download";
+import { openBlob } from "../../lib/download";
 
 interface ServiceLogActionMenuProps {
   /** Service log ID for the action. */
