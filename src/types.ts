@@ -184,3 +184,88 @@ export interface Vehicle {
   /** Material Symbols icon name for the vehicle type. */
   icon: string;
 }
+
+/* ─────────────────────────────────────────────
+ *  TRIP & EXPENSE
+ * ───────────────────────────────────────────── */
+
+/**
+ * Possible approval states for a trip expense record.
+ * - `"Approved"` – expense has been approved.
+ * - `"Pending"` – awaiting review.
+ * - `"Rejected"` – expense was rejected.
+ */
+export type ExpenseStatus = "Approved" | "Pending" | "Rejected";
+
+/* ─────────────────────────────────────────────
+ *  OPERATIONAL ANALYTICS
+ * ───────────────────────────────────────────── */
+
+/**
+ * Possible health statuses for a vehicle in the analytics log.
+ * - `"Optimal"` – performing within expected parameters.
+ * - `"Review"` – needs review due to borderline metrics.
+ * - `"Critical"` – poor performance, requires attention.
+ */
+export type VehicleHealthStatus = "Optimal" | "Review" | "Critical";
+
+/** A single vehicle row in the Transaction & Performance Log. */
+export interface VehicleAnalyticsEntry {
+  /** Vehicle identifier (e.g. `"TRK-2049"`). */
+  vehicleId: string;
+  /** Current health / performance status. */
+  status: VehicleHealthStatus;
+  /** Fuel efficiency in km/L. */
+  fuelEfficiency: number;
+  /** Operational cost in dollars. */
+  opCost: number;
+  /** Revenue generated in dollars. */
+  revenue: number;
+}
+
+/** Fleet ROI breakdown row used in the Vehicle ROI Analysis panel. */
+export interface FleetROI {
+  /** Fleet label (e.g. "Fleet A (Heavy Duty)"). */
+  label: string;
+  /** Margin percentage (0–100). */
+  margin: number;
+  /** Revenue string for display (e.g. "$42K"). */
+  rev: string;
+  /** Cost string for display (e.g. "$7.5K"). */
+  cost: string;
+}
+
+/** Daily fuel efficiency data point for the bar chart. */
+export interface FuelEfficiencyDataPoint {
+  /** Date label (e.g. "Oct 01"). */
+  label: string;
+  /** Efficiency value (unitless, rendered as bar height). */
+  value: number;
+}
+
+/** A single trip expense record. */
+export interface TripExpense {
+  /** Unique trip/expense identifier (e.g. `"#TR-321"`). */
+  id: string;
+  /** Driver assigned to this trip. */
+  driver: {
+    /** Driver's full name. */
+    name: string;
+    /** Two-letter initials for the avatar circle. */
+    initials: string;
+    /** Tailwind `bg-*` colour class for the avatar. */
+    avatarColor: string;
+  };
+  /** Vehicle used for this trip. */
+  vehicle: string;
+  /** Trip distance in km. */
+  distance: number;
+  /** Fuel expense in dollars. */
+  fuelExpense: number;
+  /** Miscellaneous expense in dollars. */
+  miscExpense: number;
+  /** Total cost (fuel + misc). */
+  totalCost: number;
+  /** Current approval status. */
+  status: ExpenseStatus;
+}

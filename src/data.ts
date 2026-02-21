@@ -14,6 +14,10 @@ import type {
   VehicleTypeBreakdown,
   Vehicle,
   Driver,
+  TripExpense,
+  VehicleAnalyticsEntry,
+  FleetROI,
+  FuelEfficiencyDataPoint,
 } from "./types";
 
 /** Primary sidebar navigation items. The `active` flag marks the default page. */
@@ -23,9 +27,9 @@ export const navItems: NavItem[] = [
   { icon: "map", label: "All Trips", href: "/trips" },
   { icon: "alt_route", label: "Trip Dispatcher", href: "/dispatcher" },
   { icon: "build", label: "Maintenance", href: "/maintenance" },
-  { icon: "receipt_long", label: "Trip & Expense", href: "#" },
+  { icon: "receipt_long", label: "Trip & Expense", href: "/expenses" },
   { icon: "verified_user", label: "Performance", href: "/performance" },
-  { icon: "analytics", label: "Analytics", href: "#" },
+  { icon: "analytics", label: "Analytics", href: "/analytics" },
 ];
 
 /** Signed-in user displayed in the sidebar profile area. */
@@ -535,3 +539,199 @@ export const vehicles: Vehicle[] = [
     icon: "local_shipping",
   },
 ];
+
+/* ─────────────────────────────────────────────
+ *  TRIP & EXPENSE
+ * ───────────────────────────────────────────── */
+
+/** Seed trip expense records for the Expense & Fuel Logging page. */
+export const tripExpenses: TripExpense[] = [
+  {
+    id: "#TR-321",
+    driver: { name: "John Doe", initials: "JD", avatarColor: "bg-gray-400" },
+    vehicle: "Volvo FH16",
+    distance: 1000,
+    fuelExpense: 19000,
+    miscExpense: 3000,
+    totalCost: 22000,
+    status: "Approved",
+  },
+  {
+    id: "#TR-322",
+    driver: { name: "Mike Smith", initials: "MS", avatarColor: "bg-blue-500" },
+    vehicle: "Scania R450",
+    distance: 850,
+    fuelExpense: 15200,
+    miscExpense: 1200,
+    totalCost: 16400,
+    status: "Pending",
+  },
+  {
+    id: "#TR-323",
+    driver: { name: "Sarah Lee", initials: "AL", avatarColor: "bg-pink-400" },
+    vehicle: "Tata Prima",
+    distance: 2300,
+    fuelExpense: 41500,
+    miscExpense: 500,
+    totalCost: 42000,
+    status: "Approved",
+  },
+  {
+    id: "#TR-324",
+    driver: { name: "Raj Patel", initials: "RJ", avatarColor: "bg-purple-400" },
+    vehicle: "Ashok Leyland",
+    distance: 500,
+    fuelExpense: 9800,
+    miscExpense: 0,
+    totalCost: 9800,
+    status: "Rejected",
+  },
+  {
+    id: "#TR-325",
+    driver: { name: "Anita Sharma", initials: "AS", avatarColor: "bg-teal-400" },
+    vehicle: "BharatBenz 1617",
+    distance: 1200,
+    fuelExpense: 22400,
+    miscExpense: 1800,
+    totalCost: 24200,
+    status: "Approved",
+  },
+  {
+    id: "#TR-326",
+    driver: { name: "Vikram Singh", initials: "VS", avatarColor: "bg-orange-400" },
+    vehicle: "Eicher Pro",
+    distance: 680,
+    fuelExpense: 12500,
+    miscExpense: 600,
+    totalCost: 13100,
+    status: "Pending",
+  },
+  {
+    id: "#TR-327",
+    driver: { name: "Priya Verma", initials: "PV", avatarColor: "bg-indigo-400" },
+    vehicle: "Mahindra Blazo",
+    distance: 1550,
+    fuelExpense: 28000,
+    miscExpense: 2400,
+    totalCost: 30400,
+    status: "Approved",
+  },
+  {
+    id: "#TR-328",
+    driver: { name: "Suresh Kumar", initials: "SK", avatarColor: "bg-emerald-500" },
+    vehicle: "Volvo FM 380",
+    distance: 920,
+    fuelExpense: 17200,
+    miscExpense: 900,
+    totalCost: 18100,
+    status: "Pending",
+  },
+  {
+    id: "#TR-329",
+    driver: { name: "Deepak Joshi", initials: "DJ", avatarColor: "bg-rose-400" },
+    vehicle: "Tata Signa",
+    distance: 1400,
+    fuelExpense: 25600,
+    miscExpense: 3200,
+    totalCost: 28800,
+    status: "Approved",
+  },
+  {
+    id: "#TR-330",
+    driver: { name: "Lisa Thompson", initials: "LT", avatarColor: "bg-cyan-400" },
+    vehicle: "Ford Transit 350",
+    distance: 350,
+    fuelExpense: 6400,
+    miscExpense: 200,
+    totalCost: 6600,
+    status: "Approved",
+  },
+  {
+    id: "#TR-331",
+    driver: { name: "Michael Chen", initials: "MC", avatarColor: "bg-amber-500" },
+    vehicle: "Kenworth T680",
+    distance: 2100,
+    fuelExpense: 38500,
+    miscExpense: 4200,
+    totalCost: 42700,
+    status: "Pending",
+  },
+  {
+    id: "#TR-332",
+    driver: { name: "Sarah Connor", initials: "SC", avatarColor: "bg-lime-500" },
+    vehicle: "Peterbilt 579",
+    distance: 760,
+    fuelExpense: 14100,
+    miscExpense: 0,
+    totalCost: 14100,
+    status: "Rejected",
+  },
+];
+
+/** Simulated total expense record count (as if backed by an API). */
+export const TOTAL_EXPENSES = 42;
+
+/* ─────────────────────────────────────────────
+ *  OPERATIONAL ANALYTICS
+ * ───────────────────────────────────────────── */
+
+/** Daily fuel efficiency data (Oct 1–31, 2023). */
+export const fuelEfficiencyData: FuelEfficiencyDataPoint[] = [
+  { label: "Oct 01", value: 58 },
+  { label: "Oct 02", value: 62 },
+  { label: "Oct 03", value: 55 },
+  { label: "Oct 04", value: 60 },
+  { label: "Oct 05", value: 64 },
+  { label: "Oct 06", value: 58 },
+  { label: "Oct 07", value: 56 },
+  { label: "Oct 08", value: 61 },
+  { label: "Oct 09", value: 59 },
+  { label: "Oct 10", value: 63 },
+  { label: "Oct 11", value: 60 },
+  { label: "Oct 12", value: 65 },
+  { label: "Oct 13", value: 62 },
+  { label: "Oct 14", value: 58 },
+  { label: "Oct 15", value: 70 },
+  { label: "Oct 16", value: 68 },
+  { label: "Oct 17", value: 72 },
+  { label: "Oct 18", value: 75 },
+  { label: "Oct 19", value: 65 },
+  { label: "Oct 20", value: 80 },
+  { label: "Oct 21", value: 78 },
+  { label: "Oct 22", value: 82 },
+  { label: "Oct 23", value: 76 },
+  { label: "Oct 24", value: 72 },
+  { label: "Oct 25", value: 85 },
+  { label: "Oct 26", value: 80 },
+  { label: "Oct 27", value: 78 },
+  { label: "Oct 28", value: 74 },
+  { label: "Oct 29", value: 70 },
+  { label: "Oct 30", value: 68 },
+  { label: "Oct 31", value: 82 },
+];
+
+/** Fleet ROI breakdown data for the analysis panel. */
+export const fleetROIData: FleetROI[] = [
+  { label: "Fleet A (Heavy Duty)", margin: 82, rev: "$42K", cost: "$7.5K" },
+  { label: "Fleet B (Mid Range)", margin: 65, rev: "$28K", cost: "$9.8K" },
+  { label: "Fleet C (Last Mile)", margin: 48, rev: "$15K", cost: "$7.8K" },
+];
+
+/** Transaction & Performance Log entries. */
+export const vehicleAnalytics: VehicleAnalyticsEntry[] = [
+  { vehicleId: "TRK-2049", status: "Optimal", fuelEfficiency: 14.2, opCost: 1240, revenue: 8400 },
+  { vehicleId: "VAN-8812", status: "Review", fuelEfficiency: 9.1, opCost: 2100, revenue: 4200 },
+  { vehicleId: "TRK-1090", status: "Optimal", fuelEfficiency: 12.8, opCost: 980, revenue: 11200 },
+  { vehicleId: "SUV-4401", status: "Critical", fuelEfficiency: 6.4, opCost: 4450, revenue: 5100 },
+  { vehicleId: "TRK-3301", status: "Optimal", fuelEfficiency: 13.5, opCost: 1100, revenue: 9800 },
+  { vehicleId: "VAN-6654", status: "Review", fuelEfficiency: 8.7, opCost: 2400, revenue: 3900 },
+  { vehicleId: "TRK-7720", status: "Optimal", fuelEfficiency: 15.1, opCost: 870, revenue: 10500 },
+  { vehicleId: "SUV-9983", status: "Critical", fuelEfficiency: 5.9, opCost: 5200, revenue: 4800 },
+  { vehicleId: "TRK-4455", status: "Optimal", fuelEfficiency: 14.8, opCost: 1050, revenue: 9200 },
+  { vehicleId: "VAN-2211", status: "Review", fuelEfficiency: 10.2, opCost: 1800, revenue: 5600 },
+  { vehicleId: "TRK-8867", status: "Optimal", fuelEfficiency: 13.9, opCost: 920, revenue: 8900 },
+  { vehicleId: "SUV-1133", status: "Critical", fuelEfficiency: 7.1, opCost: 3800, revenue: 5400 },
+];
+
+/** Simulated total vehicle count for analytics log pagination. */
+export const TOTAL_ANALYTICS_VEHICLES = 124;

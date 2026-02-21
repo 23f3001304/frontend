@@ -17,4 +17,10 @@ export { authService, default as AuthService } from "./AuthService";
 export { driverService, default as DriverService } from "./DriverService";
 export type { CreateDriverDTO, UpdateDriverDTO } from "./DriverService";
 
+export { expenseService, default as ExpenseService } from "./ExpenseService";
+export type { CreateExpenseDTO, UpdateExpenseDTO } from "./ExpenseService";
+
 export { reportService, default as ReportService } from "./ReportService";
+
+export { analyticsService, default as AnalyticsService } from "./AnalyticsService";
+export type { AnalyticsFilterDTO } from "./AnalyticsService";
