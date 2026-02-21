@@ -35,6 +35,7 @@ export const navItems: NavItem[] = [
 /** Signed-in user displayed in the sidebar profile area. */
 export const currentUser: UserProfile = {
   name: "Alex Morgan",
+  email: "alex.morgan@fleetflow.io",
   role: "Fleet Manager",
   userRole: "fleet_manager",
   avatarUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCk35KUeasH1IS5wWE63QoD1FWPHnvbLp3RafhgDBLBJ9GdLsFgOsWJvJNBY6bJTU9aLOKGS3iV9GTH0Ikx1vU8Fwu5B18gzJ47Ffr_NXvSQ-E7Gj6FR9ddD5roE_2iRzRmr7eBwGJm5eHHFU5GP6sV5JMlvx8-yDCQ5yinqTV_Vjo21F8B2ttwygU-DKkByB-2NA66z6EntxnE1nUkala8NmqNspAzZI73dX0fhjDy0l4151zYk15pX_Nq08z-3xNxCZjPZTOmaw",

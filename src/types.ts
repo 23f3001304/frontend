@@ -98,6 +98,8 @@ export interface NavItem {
 export interface UserProfile {
   /** Full display name (e.g. "Alex Morgan"). */
   name: string;
+  /** User email address. */
+  email: string;
   /** Job title or role description (display text). */
   role: string;
   /** RBAC role key used for permission checks. */

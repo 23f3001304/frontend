@@ -18,6 +18,8 @@ import Maintenance from "./pages/Maintenance";
 import Performance from "./pages/Performance";
 import TripExpense from "./pages/TripExpense";
 import Analytics from "./pages/Analytics";
+import Profile from "./pages/Profile";
+import AccountSettings from "./pages/AccountSettings";
 
 /** Context shape passed from {@link AppLayout} to child routes. */
 interface LayoutContext {
@@ -47,6 +49,8 @@ function App() {
           <Route path="/performance" element={<ProtectedRoute permission="drivers:view"><PerformancePage /></ProtectedRoute>} />
           <Route path="/expenses" element={<ProtectedRoute permission="expenses:view"><TripExpensePage /></ProtectedRoute>} />
           <Route path="/analytics" element={<ProtectedRoute permission="analytics:view"><AnalyticsPage /></ProtectedRoute>} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/account-settings" element={<AccountSettings />} />
           {/* Redirect root to dashboard */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           {/* Catch-all */}

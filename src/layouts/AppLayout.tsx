@@ -109,6 +109,7 @@ export default function AppLayout() {
         user={activeUser}
         mobileOpen={sidebarOpen}
         onClose={closeSidebar}
+        onSettingsOpen={() => setSettingsOpen(true)}
       />
 
       {/* Main Content */}
