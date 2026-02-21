@@ -14,4 +14,7 @@ export type { CreateServiceLogDTO, UpdateServiceLogDTO } from "./MaintenanceServ
 
 export { authService, default as AuthService } from "./AuthService";
 
+export { driverService, default as DriverService } from "./DriverService";
+export type { CreateDriverDTO, UpdateDriverDTO } from "./DriverService";
+
 export { reportService, default as ReportService } from "./ReportService";

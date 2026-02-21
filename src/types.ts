@@ -92,6 +92,42 @@ export interface Alert {
   message: string;
 }
 
+/* ─────────────────────────────────────────────
+ *  DRIVER PERFORMANCE
+ * ───────────────────────────────────────────── */
+
+/**
+ * Possible duty statuses for a registered driver.
+ * - `"On Duty"` – actively available for trips.
+ * - `"Off Duty"` – not currently working.
+ * - `"Suspended"` – suspended due to violations or low performance.
+ */
+export type DriverDutyStatus = "On Duty" | "Off Duty" | "Suspended";
+
+/** A single driver record in the Driver Performance page. */
+export interface Driver {
+  /** Unique driver identifier (e.g. `"DR-1045"`). */
+  id: string;
+  /** Full name of the driver. */
+  name: string;
+  /** Optional avatar image URL. */
+  avatarUrl?: string;
+  /** Driver license number (e.g. `"DL-23223"`). */
+  licenseNumber: string;
+  /** License expiry date as display string (e.g. `"22 Dec 2036"`). */
+  licenseExpiry: string;
+  /** Days until license expires; if <= 30 a warning is shown. Omit for far-future dates. */
+  licenseExpiryDays?: number;
+  /** Trip completion rate percentage (0–100). */
+  completionRate: number;
+  /** Overall safety score percentage (0–100). */
+  safetyScore: number;
+  /** Number of complaints filed against this driver. */
+  complaints: number;
+  /** Current duty status. */
+  dutyStatus: DriverDutyStatus;
+}
+
 /** Breakdown row for the Vehicle Types widget. */
 export interface VehicleTypeBreakdown {
   /** Vehicle category label (e.g. "Trucks"). */

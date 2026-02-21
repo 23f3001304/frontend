@@ -13,6 +13,7 @@ import type {
   Alert,
   VehicleTypeBreakdown,
   Vehicle,
+  Driver,
 } from "./types";
 
 /** Primary sidebar navigation items. The `active` flag marks the default page. */
@@ -23,7 +24,7 @@ export const navItems: NavItem[] = [
   { icon: "alt_route", label: "Trip Dispatcher", href: "/dispatcher" },
   { icon: "build", label: "Maintenance", href: "/maintenance" },
   { icon: "receipt_long", label: "Trip & Expense", href: "#" },
-  { icon: "verified_user", label: "Performance", href: "#" },
+  { icon: "verified_user", label: "Performance", href: "/performance" },
   { icon: "analytics", label: "Analytics", href: "#" },
 ];
 
@@ -210,6 +211,163 @@ export const trips: Trip[] = [
     status: "Loading",
   },
 ];
+
+/* ─────────────────────────────────────────────
+ *  DRIVER PERFORMANCE
+ * ───────────────────────────────────────────── */
+
+/** Seed driver records for the Performance page. */
+export const drivers: Driver[] = [
+  {
+    id: "DR-1045",
+    name: "John Smith",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCBHdvbnzhqIhsEpl7aV26nyvdF6aK7ZoosYERYGdiIyN0M5ZS02Z1NlyeqvxUWweclCv3PN1-9zfxdxpIB_tQiVkMTCRXfo9hRJlrh6s7dvxPTTzMePTXOhnJ-02LrcYvNnzifb-80HsHGNKQ6DX560MRzIVDZyAbJbhF7UJQtnVnLsvBJj4rEV8zu5T4rLgDoUN4KW7OK6nEs99n53_a2eKalz3ncRn5e9chaQYbalxmsxiJrt-jJAvgBOXGujca2PGAoLPbM1A",
+    licenseNumber: "DL-23223",
+    licenseExpiry: "22 Dec 2036",
+    completionRate: 98,
+    safetyScore: 89,
+    complaints: 4,
+    dutyStatus: "On Duty",
+  },
+  {
+    id: "DR-1082",
+    name: "Michael Chen",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCu0mo0qB93KRb-kavrB1UD4qcQhKXtAGlek3xREAr5lToS_onbRIvaa2wU4NBQd9eeQq5OHjdHuWgFvxODddeZEuzvRD7YmCKPn7NDYw3rmXAo_auTnw1yJzqAMYVEUjFM1f5mgLKpKfirPQMMujgckZmtjCNlzfkWf3ZjKyd1YxDZgD_fPARrUpqguG2gY19__epC_8rY7Amj_jZBNEAQegSX8Vu8IPHsARxVLcOXmYiZ_ce9ohGZs7xZ78A-DaIFp26LI2jRJQ",
+    licenseNumber: "DL-89421",
+    licenseExpiry: "15 Days Left",
+    licenseExpiryDays: 15,
+    completionRate: 92,
+    safetyScore: 94,
+    complaints: 1,
+    dutyStatus: "Off Duty",
+  },
+  {
+    id: "DR-1102",
+    name: "Sarah Connor",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBFRKygNCPdwKTOwvVF5IRkHbKDoLkppcMkyNknodZv-tkJdNtJHsLkmVYCHaVDurQFUY549Iy5PzUR7MF3tRG21YvNbKJPMxt5MZ53k9uLllg8Dx91TLSRE8BnY-EnfXnnwdch5V4jPDjIVcqZzDd5SyMG2Qz8XNfH-yTXPIbUeSIKkxQ-B0a2PjOLFsVhDceObVYrFgiWWYppXcmxc0pYlKj7mWXJbDn4-VXCzSOwdYAt3CZyl8M0hbPEbBAZ4o_AJf_JZdwUbg",
+    licenseNumber: "DL-12849",
+    licenseExpiry: "14 Jan 2030",
+    completionRate: 100,
+    safetyScore: 78,
+    complaints: 0,
+    dutyStatus: "On Duty",
+  },
+  {
+    id: "DR-1120",
+    name: "Robert Fox",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCk35KUeasH1IS5wWE63QoD1FWPHnvbLp3RafhgDBLBJ9GdLsFgOsWJvJNBY6bJTU9aLOKGS3iV9GTH0Ikx1vU8Fwu5B18gzJ47Ffr_NXvSQ-E7Gj6FR9ddD5roE_2iRzRmr7eBwGJm5eHHFU5GP6sV5JMlvx8-yDCQ5yinqTV_Vjo21F8B2ttwygU-DKkByB-2NA66z6EntxnE1nUkala8NmqNspAzZI73dX0fhjDy0l4151zYk15pX_Nq08z-3xNxCZjPZTOmaw",
+    licenseNumber: "DL-55291",
+    licenseExpiry: "01 Nov 2028",
+    completionRate: 65,
+    safetyScore: 45,
+    complaints: 12,
+    dutyStatus: "Suspended",
+  },
+  {
+    id: "DR-1156",
+    name: "Dave Wilson",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCBHdvbnzhqIhsEpl7aV26nyvdF6aK7ZoosYERYGdiIyN0M5ZS02Z1NlyeqvxUWweclCv3PN1-9zfxdxpIB_tQiVkMTCRXfo9hRJlrh6s7dvxPTTzMePTXOhnJ-02LrcYvNnzifb-80HsHGNKQ6DX560MRzIVDZyAbJbhF7UJQtnVnLsvBJj4rEV8zu5T4rLgDoUN4KW7OK6nEs99n53_a2eKalz3ncRn5e9chaQYbalxmsxiJrt-jJAvgBOXGujca2PGAoLPbM1A",
+    licenseNumber: "DL-99321",
+    licenseExpiry: "10 Oct 2032",
+    completionRate: 95,
+    safetyScore: 98,
+    complaints: 0,
+    dutyStatus: "On Duty",
+  },
+  {
+    id: "DR-1200",
+    name: "Raj Patel",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCu0mo0qB93KRb-kavrB1UD4qcQhKXtAGlek3xREAr5lToS_onbRIvaa2wU4NBQd9eeQq5OHjdHuWgFvxODddeZEuzvRD7YmCKPn7NDYw3rmXAo_auTnw1yJzqAMYVEUjFM1f5mgLKpKfirPQMMujgckZmtjCNlzfkWf3ZjKyd1YxDZgD_fPARrUpqguG2gY19__epC_8rY7Amj_jZBNEAQegSX8Vu8IPHsARxVLcOXmYiZ_ce9ohGZs7xZ78A-DaIFp26LI2jRJQ",
+    licenseNumber: "DL-44120",
+    licenseExpiry: "08 Mar 2029",
+    completionRate: 88,
+    safetyScore: 82,
+    complaints: 3,
+    dutyStatus: "On Duty",
+  },
+  {
+    id: "DR-1215",
+    name: "Anita Sharma",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBFRKygNCPdwKTOwvVF5IRkHbKDoLkppcMkyNknodZv-tkJdNtJHsLkmVYCHaVDurQFUY549Iy5PzUR7MF3tRG21YvNbKJPMxt5MZ53k9uLllg8Dx91TLSRE8BnY-EnfXnnwdch5V4jPDjIVcqZzDd5SyMG2Qz8XNfH-yTXPIbUeSIKkxQ-B0a2PjOLFsVhDceObVYrFgiWWYppXcmxc0pYlKj7mWXJbDn4-VXCzSOwdYAt3CZyl8M0hbPEbBAZ4o_AJf_JZdwUbg",
+    licenseNumber: "DL-78210",
+    licenseExpiry: "25 Jun 2031",
+    completionRate: 97,
+    safetyScore: 91,
+    complaints: 0,
+    dutyStatus: "On Duty",
+  },
+  {
+    id: "DR-1230",
+    name: "Vikram Singh",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCk35KUeasH1IS5wWE63QoD1FWPHnvbLp3RafhgDBLBJ9GdLsFgOsWJvJNBY6bJTU9aLOKGS3iV9GTH0Ikx1vU8Fwu5B18gzJ47Ffr_NXvSQ-E7Gj6FR9ddD5roE_2iRzRmr7eBwGJm5eHHFU5GP6sV5JMlvx8-yDCQ5yinqTV_Vjo21F8B2ttwygU-DKkByB-2NA66z6EntxnE1nUkala8NmqNspAzZI73dX0fhjDy0l4151zYk15pX_Nq08z-3xNxCZjPZTOmaw",
+    licenseNumber: "DL-33456",
+    licenseExpiry: "20 Days Left",
+    licenseExpiryDays: 20,
+    completionRate: 74,
+    safetyScore: 62,
+    complaints: 7,
+    dutyStatus: "Off Duty",
+  },
+  {
+    id: "DR-1248",
+    name: "Priya Verma",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBFRKygNCPdwKTOwvVF5IRkHbKDoLkppcMkyNknodZv-tkJdNtJHsLkmVYCHaVDurQFUY549Iy5PzUR7MF3tRG21YvNbKJPMxt5MZ53k9uLllg8Dx91TLSRE8BnY-EnfXnnwdch5V4jPDjIVcqZzDd5SyMG2Qz8XNfH-yTXPIbUeSIKkxQ-B0a2PjOLFsVhDceObVYrFgiWWYppXcmxc0pYlKj7mWXJbDn4-VXCzSOwdYAt3CZyl8M0hbPEbBAZ4o_AJf_JZdwUbg",
+    licenseNumber: "DL-19845",
+    licenseExpiry: "17 Sep 2034",
+    completionRate: 100,
+    safetyScore: 96,
+    complaints: 1,
+    dutyStatus: "On Duty",
+  },
+  {
+    id: "DR-1260",
+    name: "Suresh Kumar",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCu0mo0qB93KRb-kavrB1UD4qcQhKXtAGlek3xREAr5lToS_onbRIvaa2wU4NBQd9eeQq5OHjdHuWgFvxODddeZEuzvRD7YmCKPn7NDYw3rmXAo_auTnw1yJzqAMYVEUjFM1f5mgLKpKfirPQMMujgckZmtjCNlzfkWf3ZjKyd1YxDZgD_fPARrUpqguG2gY19__epC_8rY7Amj_jZBNEAQegSX8Vu8IPHsARxVLcOXmYiZ_ce9ohGZs7xZ78A-DaIFp26LI2jRJQ",
+    licenseNumber: "DL-67890",
+    licenseExpiry: "05 Feb 2027",
+    completionRate: 85,
+    safetyScore: 77,
+    complaints: 5,
+    dutyStatus: "On Duty",
+  },
+  {
+    id: "DR-1275",
+    name: "Deepak Joshi",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCk35KUeasH1IS5wWE63QoD1FWPHnvbLp3RafhgDBLBJ9GdLsFgOsWJvJNBY6bJTU9aLOKGS3iV9GTH0Ikx1vU8Fwu5B18gzJ47Ffr_NXvSQ-E7Gj6FR9ddD5roE_2iRzRmr7eBwGJm5eHHFU5GP6sV5JMlvx8-yDCQ5yinqTV_Vjo21F8B2ttwygU-DKkByB-2NA66z6EntxnE1nUkala8NmqNspAzZI73dX0fhjDy0l4151zYk15pX_Nq08z-3xNxCZjPZTOmaw",
+    licenseNumber: "DL-54321",
+    licenseExpiry: "12 Aug 2033",
+    completionRate: 91,
+    safetyScore: 88,
+    complaints: 2,
+    dutyStatus: "On Duty",
+  },
+  {
+    id: "DR-1290",
+    name: "Lisa Thompson",
+    avatarUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBFRKygNCPdwKTOwvVF5IRkHbKDoLkppcMkyNknodZv-tkJdNtJHsLkmVYCHaVDurQFUY549Iy5PzUR7MF3tRG21YvNbKJPMxt5MZ53k9uLllg8Dx91TLSRE8BnY-EnfXnnwdch5V4jPDjIVcqZzDd5SyMG2Qz8XNfH-yTXPIbUeSIKkxQ-B0a2PjOLFsVhDceObVYrFgiWWYppXcmxc0pYlKj7mWXJbDn4-VXCzSOwdYAt3CZyl8M0hbPEbBAZ4o_AJf_JZdwUbg",
+    licenseNumber: "DL-11223",
+    licenseExpiry: "30 Apr 2035",
+    completionRate: 99,
+    safetyScore: 95,
+    complaints: 0,
+    dutyStatus: "On Duty",
+  },
+];
+
+/** Simulated total driver count (as if backed by an API with more records). */
+export const TOTAL_DRIVERS = 48;
 
 /** Vehicle category breakdown for the bottom-left widget. */
 export const vehicleTypes: VehicleTypeBreakdown[] = [
